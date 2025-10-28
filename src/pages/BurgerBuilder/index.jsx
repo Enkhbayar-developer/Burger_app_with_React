@@ -2,21 +2,38 @@ import React from "react";
 
 import Burger from "../../components/Burger";
 
+import BuildControls from "../../components/BuildControls";
+
 class BurgerBuilder extends React.Component {
   state = {
     ingredients: {
-      Salad: 1,
-      Bacon: 2,
-      Cheese: 3,
-      Meat: 2,
+      Salad: 0,
+      Bacon: 0,
+      Cheese: 0,
+      Meat: 0,
     },
+  };
+
+  AddIngredient = (type) => {
+    const newIngredients = { ...this.state.ingredients };
+    newIngredients[type]++;
+    this.setState({ ingredients: newIngredients });
+  };
+
+  RemoveIngredient = (type) => {
+    const newIngredients = { ...this.state.ingredients };
+    newIngredients[type]--;
+    this.setState({ ingredients: newIngredients });
   };
 
   render() {
     return (
       <div>
         <Burger ingredients={this.state.ingredients} />
-        <div>Ingredients control</div>
+        <BuildControls
+          AddIngredient={this.AddIngredient}
+          RemoveIngredient={this.RemoveIngredient}
+        />
       </div>
     );
   }
