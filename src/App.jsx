@@ -2,7 +2,7 @@ import { useState } from "react";
 import css from "./App.module.css";
 
 import Toolbar from "./components/Toolbar";
-import BurgerBuilder from "./pages/BurgerBuilder";
+import BurgerPage from "./pages/BurgerPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,7 +11,7 @@ function App() {
     <>
       <Toolbar />
       <div className={css.Content}>
-        <BurgerBuilder />
+        <BurgerPage />
       </div>
     </>
   );
