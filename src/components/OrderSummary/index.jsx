@@ -4,8 +4,8 @@ import css from "./style.module.css";
 const OrderSummary = (props) => {
   return (
     <div>
-      <h3>ingredients</h3>
-      <p>Ingredient1</p>
+      <h3>Таны захиалга</h3>
+      <p>Таны сонгосон орцууд:</p>
       <ul>
         {Object.keys(props.ingredients).map((el) => (
           <li key={el}>
@@ -13,7 +13,10 @@ const OrderSummary = (props) => {
           </li>
         ))}
       </ul>
-      <p>Continue for checkout?</p>
+      <p>
+        <strong>Захиалгын дүн : {props.price}₮</strong>
+      </p>
+      <p>Та цаашаа үргэлжлүүлэх үү?</p>
     </div>
   );
 };

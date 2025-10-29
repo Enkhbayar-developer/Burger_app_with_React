@@ -29,7 +29,11 @@ const BuildControls = (props) => {
         />
       ))}
 
-      <button disabled={disabledInfo} className={css.OrderButton}>
+      <button
+        onClick={props.showOrderSummary}
+        disabled={disabledInfo}
+        className={css.OrderButton}
+      >
         Захиалах
       </button>
     </div>

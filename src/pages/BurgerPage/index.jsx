@@ -30,6 +30,15 @@ class BurgerPage extends React.Component {
       Meat: 0,
     },
     totalPrice: 1000,
+    confirmOrder: false,
+  };
+
+  showOrderSummary = () => {
+    this.setState({ confirmOrder: true });
+  };
+
+  hideOrderSummary = () => {
+    this.setState({ confirmOrder: false });
   };
 
   AddIngredient = (type) => {
@@ -57,14 +66,20 @@ class BurgerPage extends React.Component {
     }
     return (
       <div>
-        <Modal>
+        <Modal
+          hideOrderSummary={this.hideOrderSummary}
+          show={this.state.confirmOrder}
+        >
           <OrderSummary
+            price={this.state.totalPrice}
             ingredientsNames={ingredientsNames}
             ingredients={this.state.ingredients}
           />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
+          hideOrderSummary={this.hideOrderSummary}
+          showOrderSummary={this.showOrderSummary}
           ingredientsNames={ingredientsNames}
           price={this.state.totalPrice}
           disabledingredients={disabledingredients}
