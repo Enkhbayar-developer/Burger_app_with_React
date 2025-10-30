@@ -3,7 +3,7 @@ import css from "./style.module.css";
 
 const Shadow = (props) => {
   return props.show ? (
-    <div onClick={props.hideOrderSummary} className={css.Shadow}></div>
+    <div onClick={props.clicked} className={css.Shadow}></div>
   ) : null;
 };
 

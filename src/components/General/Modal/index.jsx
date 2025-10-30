@@ -4,7 +4,7 @@ import Shadow from "../Shadow";
 
 const Modal = (props) => (
   <>
-    <Shadow show={props.show} hideOrderSummary={props.hideOrderSummary} />
+    <Shadow show={props.show} clicked={props.hideOrderSummary} />
     <div
       style={{
         transform: props.show ? "translateY(0)" : "translateY(-100vh)",

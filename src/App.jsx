@@ -1,20 +1,35 @@
-import { useState } from "react";
+import React from "react";
 import css from "./App.module.css";
 
 import Toolbar from "./components/Toolbar";
 import BurgerPage from "./pages/BurgerPage";
+import Sidebar from "./components/Sidebar";
 
-function App() {
-  const [count, setCount] = useState(0);
+class App extends React.Component {
+  state = {
+    showSidebar: false,
+  };
 
-  return (
-    <>
-      <Toolbar />
-      <div className={css.Content}>
-        <BurgerPage />
-      </div>
-    </>
-  );
+  toggleSidebar = () => {
+    this.setState((prevState) => ({
+      showSidebar: !prevState.showSidebar,
+    }));
+  };
+
+  render() {
+    return (
+      <>
+        <Toolbar toggleSidebar={this.toggleSidebar} />
+        <Sidebar
+          showSidebar={this.state.showSidebar}
+          toggleSidebar={this.toggleSidebar}
+        />
+        <div className={css.Content}>
+          <BurgerPage />
+        </div>
+      </>
+    );
+  }
 }
 
 export default App;

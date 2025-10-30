@@ -1,5 +1,6 @@
 import React from "react";
 import css from "./style.module.css";
+import Button from "../General/Button";
 
 const OrderSummary = (props) => {
   return (
@@ -17,6 +18,8 @@ const OrderSummary = (props) => {
         <strong>Захиалгын дүн : {props.price}₮</strong>
       </p>
       <p>Та цаашаа үргэлжлүүлэх үү?</p>
+      <Button clicked={props.onCancel} btnType="Danger" text="Discard" />
+      <Button clicked={props.onContinue} btnType="Success" text="Continue" />
     </div>
   );
 };
