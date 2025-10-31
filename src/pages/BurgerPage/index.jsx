@@ -6,6 +6,7 @@ import BuildControls from "../../components/BuildControls";
 
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
+import Spinner from "../../components/General/Spinner";
 import axios from "../../axios_order";
 
 const ingredientsPrices = {
@@ -33,24 +34,34 @@ class BurgerPage extends React.Component {
     totalPrice: 1000,
     confirmOrder: false,
     latestCustomer: null,
+    loading: false,
   };
 
   componentDidMount = () => {
-    axios.get("/orders.json").then((response) => {
-      let arr = Object.entries(response.data);
-      arr = arr.reverse();
-      arr.forEach((item) => {
-        console.log(item[1].address.name + ": " + item[1].price + "₮");
+    this.setState({ loading: true });
+    axios
+      .get("/orders.json")
+      .then((response) => {
+        let arr = Object.entries(response.data);
+        arr = arr.reverse();
+        arr.forEach((item) => {
+          console.log(item[1].address.name + ": " + item[1].price + "₮");
+        });
+        const lastorder = arr[arr.length - 1];
+        console.log("Сүүлийн захиалга: ");
+        console.log(lastorder[1]);
+        this.setState({
+          ingredients: lastorder[1].ingredients,
+          totalPrice: lastorder[1].price,
+          latestCustomer: lastorder[1].address.name,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        this.setState({ loading: false });
       });
-      const lastorder = arr[arr.length - 1];
-      // console.log("Сүүлийн захиалга: ");
-      // console.log(lastorder[1]);
-      this.setState({
-        ingredients: lastorder[1].ingredients,
-        totalPrice: lastorder[1].price,
-        latestCustomer: lastorder[1].address.name,
-      });
-    });
   };
 
   continueOrder = () => {
@@ -64,6 +75,7 @@ class BurgerPage extends React.Component {
         street: "Peace avenue 123",
       },
     };
+    this.setState({ loading: true });
     axios
       .post("/orders.json", order)
       .then((response) => {
@@ -71,6 +83,9 @@ class BurgerPage extends React.Component {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        this.setState({ loading: false, confirmOrder: false });
       });
   };
 
@@ -111,15 +126,19 @@ class BurgerPage extends React.Component {
           hideOrderSummary={this.hideOrderSummary}
           show={this.state.confirmOrder}
         >
-          <OrderSummary
-            onCancel={this.hideOrderSummary}
-            onContinue={this.continueOrder}
-            price={this.state.totalPrice}
-            ingredientsNames={ingredientsNames}
-            ingredients={this.state.ingredients}
-          />
+          {this.state.loading ? (
+            <Spinner />
+          ) : (
+            <OrderSummary
+              onCancel={this.hideOrderSummary}
+              onContinue={this.continueOrder}
+              price={this.state.totalPrice}
+              ingredientsNames={ingredientsNames}
+              ingredients={this.state.ingredients}
+            />
+          )}
         </Modal>
-        <p>Latest Customer: {this.state.latestCustomer}</p>
+        {this.state.loading && <Spinner />}
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           hideOrderSummary={this.hideOrderSummary}
