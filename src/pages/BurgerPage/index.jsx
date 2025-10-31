@@ -6,6 +6,7 @@ import BuildControls from "../../components/BuildControls";
 
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
+import axios from "../../axios_order";
 
 const ingredientsPrices = {
   Salad: 500,
@@ -31,10 +32,46 @@ class BurgerPage extends React.Component {
     },
     totalPrice: 1000,
     confirmOrder: false,
+    latestCustomer: null,
+  };
+
+  componentDidMount = () => {
+    axios.get("/orders.json").then((response) => {
+      let arr = Object.entries(response.data);
+      arr = arr.reverse();
+      arr.forEach((item) => {
+        console.log(item[1].address.name + ": " + item[1].price + "₮");
+      });
+      const lastorder = arr[arr.length - 1];
+      // console.log("Сүүлийн захиалга: ");
+      // console.log(lastorder[1]);
+      this.setState({
+        ingredients: lastorder[1].ingredients,
+        totalPrice: lastorder[1].price,
+        latestCustomer: lastorder[1].address.name,
+      });
+    });
   };
 
   continueOrder = () => {
-    alert("You continue!");
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice,
+      address: {
+        name: "John Doe",
+        city: "Ulaanbaatar",
+        district: "Bayangol",
+        street: "Peace avenue 123",
+      },
+    };
+    axios
+      .post("/orders.json", order)
+      .then((response) => {
+        alert("Таны захиалга амжилттай хийгдлээ!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   showOrderSummary = () => {
@@ -82,6 +119,7 @@ class BurgerPage extends React.Component {
             ingredients={this.state.ingredients}
           />
         </Modal>
+        <p>Latest Customer: {this.state.latestCustomer}</p>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           hideOrderSummary={this.hideOrderSummary}
