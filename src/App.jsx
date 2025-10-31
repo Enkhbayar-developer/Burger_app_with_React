@@ -3,6 +3,7 @@ import css from "./App.module.css";
 
 import Toolbar from "./components/Toolbar";
 import BurgerPage from "./pages/BurgerPage";
+import OrderPage from "./pages/OrderPage";
 import Sidebar from "./components/Sidebar";
 
 class App extends React.Component {
@@ -25,7 +26,8 @@ class App extends React.Component {
           toggleSidebar={this.toggleSidebar}
         />
         <div className={css.Content}>
-          <BurgerPage />
+          {/* <BurgerPage /> */}
+          <OrderPage />
         </div>
       </>
     );
