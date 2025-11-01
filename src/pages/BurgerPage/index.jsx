@@ -33,36 +33,9 @@ class BurgerPage extends React.Component {
     },
     totalPrice: 1000,
     confirmOrder: false,
-    latestCustomer: null,
-    loading: false,
   };
 
-  componentDidMount = () => {
-    this.setState({ loading: true });
-    axios
-      .get("/orders.json")
-      .then((response) => {
-        let arr = Object.entries(response.data);
-        arr = arr.reverse();
-        arr.forEach((item) => {
-          console.log(item[1].address.name + ": " + item[1].price + "₮");
-        });
-        const lastorder = arr[arr.length - 1];
-        console.log("Сүүлийн захиалга: ");
-        console.log(lastorder[1]);
-        this.setState({
-          ingredients: lastorder[1].ingredients,
-          totalPrice: lastorder[1].price,
-          latestCustomer: lastorder[1].address.name,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        this.setState({ loading: false });
-      });
-  };
+  componentDidMount = () => {};
 
   continueOrder = () => {
     const order = {
@@ -138,7 +111,6 @@ class BurgerPage extends React.Component {
             />
           )}
         </Modal>
-        {this.state.loading && <Spinner />}
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           hideOrderSummary={this.hideOrderSummary}

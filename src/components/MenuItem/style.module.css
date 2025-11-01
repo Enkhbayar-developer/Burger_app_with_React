@@ -16,7 +16,7 @@
 
 .MenuItem a:hover,
 .MenuItem a:active,
-.MenuItem a.active {
+.MenuItem a.Active {
   color: #40a4c8;
 }
 
@@ -39,7 +39,7 @@
 
   .MenuItem a:hover,
   .MenuItem a:active,
-  .MenuItem a.active {
+  .MenuItem a.Active {
     background-color: #8f5c2c;
     border-bottom: 4px solid #40a4c8;
   }

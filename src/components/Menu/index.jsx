@@ -5,10 +5,10 @@ import MenuItem from "../MenuItem";
 const Menu = () => (
   <div>
     <ul className={css.Menu}>
-      <MenuItem active link="#">
+      <MenuItem exact link="/">
         Шинэ захиалга
       </MenuItem>
-      <MenuItem link="#">Нэвтрэх</MenuItem>
+      <MenuItem link="/orders">захиалгууд</MenuItem>
     </ul>
   </div>
 );
