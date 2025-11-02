@@ -4,11 +4,7 @@ import css from "./style.module.css";
 
 const MenuItem = (props) => (
   <li className={css.MenuItem}>
-    <NavLink
-      exact={props.exact}
-      className={props.exact ? css.Active : null}
-      to={props.link}
-    >
+    <NavLink exact={props.exact} activeClassName={css.Active} to={props.link}>
       {props.children}
     </NavLink>
     {/* <a className={props.active ? css.active : null} href={props.link}>

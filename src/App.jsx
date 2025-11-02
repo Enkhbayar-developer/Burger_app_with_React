@@ -1,11 +1,12 @@
 import React from "react";
 import css from "./App.module.css";
-import { Routes, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import Toolbar from "./components/Toolbar";
 import BurgerPage from "./pages/BurgerPage";
 import OrderPage from "./pages/OrderPage";
 import Sidebar from "./components/Sidebar";
+import { ShippingPage } from "./pages/ShippingPage";
 
 class App extends React.Component {
   state = {
@@ -27,10 +28,11 @@ class App extends React.Component {
           toggleSidebar={this.toggleSidebar}
         />
         <div className={css.Content}>
-          <Routes>
-            <Route path="/orders" element={<OrderPage />} />
-            <Route path="/" element={<BurgerPage />} />
-          </Routes>
+          <Switch>
+            <Route path="/orders" component={OrderPage} />
+            <Route path="/ship" component={ShippingPage} />
+            <Route path="/" component={BurgerPage} />
+          </Switch>
         </div>
       </>
     );

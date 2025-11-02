@@ -17,7 +17,7 @@
 .MenuItem a:hover,
 .MenuItem a:active,
 .MenuItem a.Active {
-  color: #40a4c8;
+  color: white;
 }
 
 @media (min-width: 500px) {
