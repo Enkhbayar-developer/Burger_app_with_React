@@ -8,37 +8,41 @@ import ContactData from "../../components/ContactData";
 export class ShippingPage extends React.Component {
   state = {
     ingredients: {
-      Salad: 1,
-      Bacon: 1,
-      Cheese: 1,
-      Meat: 1,
+      Salad: 0,
+      Bacon: 0,
+      Cheese: 0,
+      Meat: 0,
     },
+    price: 0,
   };
 
   componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
+    let price = 0;
     for (let param of query.entries()) {
-      ingredients[param[0]] = param[1];
+      if (param[0] !== "dun") ingredients[param[0]] = param[1];
+      else price = param[1];
     }
-    this.setState({ ingredients });
+    this.setState({ ingredients, price });
   }
 
-  goBack = () => {
+  CancelOrder = () => {
     this.props.history.goBack();
   };
 
   showContactdata = () => {
-    this.props.history.push("/ship/contact");
+    this.props.history.replace("/ship/contact");
   };
 
   render() {
     return (
       <div className={css.ShippingPage}>
         <p>Таны захиалга:</p>
+        <p>Нийт дүн: {this.state.price}</p>
         <Burger ingredients={this.state.ingredients} />
         <Button
-          clicked={this.goBack}
+          clicked={this.CancelOrder}
           btnType="Danger"
           text="Захиалгыг цуцлах"
         />
@@ -48,7 +52,12 @@ export class ShippingPage extends React.Component {
           text="Хүргэлтийн мэдээлэлээ оруулах"
         />
 
-        <Route path="/ship/contact" component={ContactData} />
+        <Route path="/ship/contact">
+          <ContactData
+            ingredients={this.state.ingredients}
+            price={this.state.price}
+          />
+        </Route>
       </div>
     );
   }

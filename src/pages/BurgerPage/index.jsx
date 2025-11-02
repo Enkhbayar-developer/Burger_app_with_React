@@ -38,34 +38,13 @@ class BurgerPage extends React.Component {
   componentDidMount = () => {};
 
   continueOrder = () => {
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   address: {
-    //     name: "John Doe",
-    //     city: "Ulaanbaatar",
-    //     district: "Bayangol",
-    //     street: "Peace avenue 123",
-    //   },
-    // };
-    // this.setState({ loading: true });
-    // axios
-    //   .post("/orders.json", order)
-    //   .then((response) => {
-    //     alert("Таны захиалга амжилттай хийгдлээ!");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     this.setState({ loading: false, confirmOrder: false });
-    //   });
-
     const params = [];
 
     for (let ing in this.state.ingredients) {
       params.push(ing + "=" + this.state.ingredients[ing]);
     }
+
+    params.push("dun=" + this.state.totalPrice);
 
     const query = params.join("&");
 
@@ -125,7 +104,10 @@ class BurgerPage extends React.Component {
             />
           )}
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
+        <Burger
+          choose={this.props.choose}
+          ingredients={this.state.ingredients}
+        />
         <BuildControls
           hideOrderSummary={this.hideOrderSummary}
           showOrderSummary={this.showOrderSummary}

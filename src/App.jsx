@@ -11,12 +11,17 @@ import { ShippingPage } from "./pages/ShippingPage";
 class App extends React.Component {
   state = {
     showSidebar: false,
+    favourite: "N/A",
   };
 
   toggleSidebar = () => {
     this.setState((prevState) => ({
       showSidebar: !prevState.showSidebar,
     }));
+  };
+
+  choose = (ing) => {
+    this.setState({ favourite: ing });
   };
 
   render() {
@@ -28,10 +33,14 @@ class App extends React.Component {
           toggleSidebar={this.toggleSidebar}
         />
         <div className={css.Content}>
+          <p>Сонгосон орц: {this.state.favourite}</p>
           <Switch>
             <Route path="/orders" component={OrderPage} />
             <Route path="/ship" component={ShippingPage} />
-            <Route path="/" component={BurgerPage} />
+            <Route
+              path="/"
+              render={() => <BurgerPage choose={this.choose} />}
+            />
           </Switch>
         </div>
       </>

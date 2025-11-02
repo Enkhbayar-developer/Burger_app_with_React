@@ -1,3 +1,10 @@
 .Content {
   margin-top: 72px;
 }
+
+.Content p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0;
+}

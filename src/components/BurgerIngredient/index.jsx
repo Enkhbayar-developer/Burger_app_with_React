@@ -12,13 +12,29 @@ const BurgerIngredient = (props) => {
       </div>
     );
   } else if (props.type == "Salad") {
-    return <div className={css.Salad}></div>;
+    return (
+      <div className={css.Salad}>
+        <button onClick={() => props.choose("Салад")}>x</button>
+      </div>
+    );
   } else if (props.type == "Bacon") {
-    return <div className={css.Bacon}></div>;
+    return (
+      <div className={css.Bacon}>
+        <button onClick={() => props.choose("Гахайн мах")}>x</button>
+      </div>
+    );
   } else if (props.type == "Cheese") {
-    return <div className={css.Cheese}></div>;
+    return (
+      <div className={css.Cheese}>
+        <button onClick={() => props.choose("Бяслаг")}>x</button>
+      </div>
+    );
   } else if (props.type == "Meat") {
-    return <div className={css.Meat}></div>;
+    return (
+      <div className={css.Meat}>
+        <button onClick={() => props.choose("Үхрийн мах")}>x</button>
+      </div>
+    );
   } else if (props.type == "BreadBottom") {
     return <div className={css.BreadBottom}></div>;
   }
