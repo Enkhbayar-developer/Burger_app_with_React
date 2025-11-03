@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Burger from "../../components/Burger";
 
@@ -25,13 +26,6 @@ const ingredientsNames = {
 
 class BurgerPage extends React.Component {
   state = {
-    ingredients: {
-      Salad: 0,
-      Bacon: 0,
-      Cheese: 0,
-      Meat: 0,
-    },
-    totalPrice: 1000,
     confirmOrder: false,
   };
 
@@ -40,11 +34,11 @@ class BurgerPage extends React.Component {
   continueOrder = () => {
     const params = [];
 
-    for (let ing in this.state.ingredients) {
-      params.push(ing + "=" + this.state.ingredients[ing]);
+    for (let ing in this.props.burgeringredient) {
+      params.push(ing + "=" + this.props.burgeringredient[ing]);
     }
 
-    params.push("dun=" + this.state.totalPrice);
+    params.push("dun=" + this.props.total);
 
     const query = params.join("&");
 
@@ -64,25 +58,25 @@ class BurgerPage extends React.Component {
   };
 
   AddIngredient = (type) => {
-    const newIngredients = { ...this.state.ingredients };
+    const newIngredients = { ...this.props.burgeringredient };
     newIngredients[type]++;
     const priceAddition = ingredientsPrices[type];
-    const newPrice = this.state.totalPrice + priceAddition;
+    const newPrice = this.props.total + priceAddition;
     this.setState({ totalPrice: newPrice });
     this.setState({ ingredients: newIngredients });
   };
 
   RemoveIngredient = (type) => {
-    const newIngredients = { ...this.state.ingredients };
+    const newIngredients = { ...this.props.burgeringredient };
     newIngredients[type]--;
     const priceDeduction = ingredientsPrices[type];
-    const newPrice = this.state.totalPrice - priceDeduction;
+    const newPrice = this.props.total - priceDeduction;
     this.setState({ totalPrice: newPrice });
     this.setState({ ingredients: newIngredients });
   };
 
   render() {
-    const disabledingredients = { ...this.state.ingredients };
+    const disabledingredients = { ...this.props.burgeringredient };
     for (let key in disabledingredients) {
       disabledingredients[key] = disabledingredients[key] <= 0;
     }
@@ -98,28 +92,40 @@ class BurgerPage extends React.Component {
             <OrderSummary
               onCancel={this.hideOrderSummary}
               onContinue={this.continueOrder}
-              price={this.state.totalPrice}
+              price={this.props.total}
               ingredientsNames={ingredientsNames}
-              ingredients={this.state.ingredients}
+              ingredients={this.props.burgeringredient}
             />
           )}
         </Modal>
-        <Burger
-          choose={this.props.choose}
-          ingredients={this.state.ingredients}
-        />
+        <Burger ingredients={this.props.burgeringredient} />
         <BuildControls
           hideOrderSummary={this.hideOrderSummary}
           showOrderSummary={this.showOrderSummary}
           ingredientsNames={ingredientsNames}
-          price={this.state.totalPrice}
+          price={this.props.total}
           disabledingredients={disabledingredients}
-          AddIngredient={this.AddIngredient}
-          RemoveIngredient={this.RemoveIngredient}
+          AddIngredient={this.props.addIng}
+          RemoveIngredient={this.props.rmvIng}
         />
       </div>
     );
   }
 }
 
-export default BurgerPage;
+const a = (state) => {
+  return {
+    burgeringredient: state.ingredients,
+    total: state.totalPrice,
+  };
+};
+
+const b = (dispatch) => {
+  return {
+    addIng: (Ingname) => dispatch({ type: "ADD_INGREDIENT", incIng: Ingname }),
+    rmvIng: (Ingname) =>
+      dispatch({ type: "REMOVE_INGREDIENT", decIng: Ingname }),
+  };
+};
+
+export default connect(a, b)(BurgerPage);

@@ -12,13 +12,7 @@ const Burger = (props) => {
 
   transformedIngredients.map((el) => {
     for (let i = 0; i < el[1]; i++)
-      content.push(
-        <BurgerIngredient
-          choose={props.choose}
-          type={el[0]}
-          key={`${el[0]}${i + 1}`}
-        />
-      );
+      content.push(<BurgerIngredient type={el[0]} key={`${el[0]}${i + 1}`} />);
   });
 
   if (content.length === 0) content = <p>Бургерийн орцоо оруулна уу!</p>;
