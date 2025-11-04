@@ -9,6 +9,7 @@ import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
 import Spinner from "../../components/General/Spinner";
 import axios from "../../axios_order";
+import * as actions from "../../redux/actions/burgerActions";
 
 const ingredientsPrices = {
   Salad: 500,
@@ -113,19 +114,18 @@ class BurgerPage extends React.Component {
   }
 }
 
-const a = (state) => {
+const mapStateToProps = (state) => {
   return {
     burgeringredient: state.ingredients,
     total: state.totalPrice,
   };
 };
 
-const b = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addIng: (Ingname) => dispatch({ type: "ADD_INGREDIENT", incIng: Ingname }),
-    rmvIng: (Ingname) =>
-      dispatch({ type: "REMOVE_INGREDIENT", decIng: Ingname }),
+    addIng: (Ingname) => dispatch(actions.addIngredient(Ingname)),
+    rmvIng: (Ingname) => dispatch(actions.rmvIngredient(Ingname)),
   };
 };
 
-export default connect(a, b)(BurgerPage);
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerPage);
