@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import css from "./style.module.css";
 import Button from "../General/Button";
 import Spinner from "../General/Spinner";
@@ -99,4 +100,11 @@ class ContactData extends React.Component {
   }
 }
 
-export default withRouter(ContactData);
+const mapStateToProps = (state) => {
+  return {
+    price: state.totalPrice,
+    ingredients: state.ingredients,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(ContactData));

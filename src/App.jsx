@@ -6,7 +6,7 @@ import Toolbar from "./components/Toolbar";
 import BurgerPage from "./pages/BurgerPage";
 import OrderPage from "./pages/OrderPage";
 import Sidebar from "./components/Sidebar";
-import { ShippingPage } from "./pages/ShippingPage";
+import ShippingPage from "./pages/ShippingPage";
 
 class App extends React.Component {
   state = {

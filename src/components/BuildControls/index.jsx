@@ -1,12 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions/burgerActions";
 import css from "./style.module.css";
 import BuildControl from "../BuildControl";
 
 const BuildControls = (props) => {
+  const disabledingredients = { ...props.burgeringredient };
+  for (let key in disabledingredients) {
+    disabledingredients[key] = disabledingredients[key] <= 0;
+  }
+
   let disabledInfo = true;
   {
-    for (let key in props.disabledingredients) {
-      if (!props.disabledingredients[key]) {
+    for (let key in disabledingredients) {
+      if (!disabledingredients[key]) {
         disabledInfo = false;
         break;
       }
@@ -21,9 +28,9 @@ const BuildControls = (props) => {
 
       {Object.keys(props.ingredientsNames).map((el) => (
         <BuildControl
-          removeIngredient={props.RemoveIngredient}
-          addIngredient={props.AddIngredient}
-          disabled={props.disabledingredients}
+          removeIngredient={props.rmvIng}
+          addIngredient={props.addIng}
+          disabled={disabledingredients}
           type={el}
           ingredient={props.ingredientsNames[el]}
         />
@@ -39,5 +46,19 @@ const BuildControls = (props) => {
     </div>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    burgeringredient: state.ingredients,
+    price: state.totalPrice,
+    ingredientsNames: state.ingredientsNames,
+  };
+};
 
-export default BuildControls;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addIng: (Ingname) => dispatch(actions.addIngredient(Ingname)),
+    rmvIng: (Ingname) => dispatch(actions.rmvIngredient(Ingname)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuildControls);
