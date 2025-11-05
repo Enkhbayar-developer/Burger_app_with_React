@@ -10,6 +10,7 @@ import App from "./App";
 
 import burgerReducer from "./redux/reducer/burgerreducer";
 import orderReducer from "./redux/reducer/orderReducer";
+import signupReducer from "./redux/reducer/signupReducer";
 
 const logger = (store) => {
   return (next) => {
@@ -28,6 +29,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducers = combineReducers({
   burgerReducer,
   orderReducer,
+  signupReducer,
 });
 
 const middlewares = [thunk, logger];

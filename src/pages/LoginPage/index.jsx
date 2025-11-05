@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import * as actions from "../../redux/actions/loginAcitons";
 import Button from "../../components/General/Button";
+import Spinner from "../../components/General/Spinner";
 import css from "./style.module.css";
 
 class LoginPage extends Component {
@@ -17,12 +21,13 @@ class LoginPage extends Component {
   };
 
   login = () => {
-    alert("login..." + this.state.email);
+    this.props.userlogin(this.state.email, this.state.password);
   };
 
   render() {
     return (
       <div className={css.Login}>
+        {this.props.userId && <Redirect to="/orders" />}
         <h1>Login</h1>
         <p>Please input your information</p>
         <input
@@ -37,10 +42,30 @@ class LoginPage extends Component {
           name=""
           placeholder="input your password"
         />
+        {this.props.loggingIn && <Spinner />}
+
+        {this.props.error && (
+          <div style={{ color: "red" }}>{this.props.error}</div>
+        )}
         <Button text="Login" btnType="Success" clicked={this.login} />
       </div>
     );
   }
 }
 
-export default LoginPage;
+const mapStateToProps = (state) => {
+  return {
+    loggingIn: state.signupReducer.loggingIn,
+    error: state.signupReducer.error,
+    userId: state.signupReducer.userId,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userlogin: (email, password) =>
+      dispatch(actions.loginUser(email, password)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
