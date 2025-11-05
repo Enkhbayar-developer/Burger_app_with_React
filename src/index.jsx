@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import { thunk } from "redux-thunk";
 
 import "./index.css";
 import App from "./App";
@@ -29,7 +30,12 @@ const reducers = combineReducers({
   orderReducer,
 });
 
-const store = createStore(reducers, composeEnhancers(applyMiddleware(logger)));
+const middlewares = [thunk, logger];
+
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(...middlewares))
+);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
