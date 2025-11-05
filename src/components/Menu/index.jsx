@@ -9,6 +9,8 @@ const Menu = () => (
         Шинэ захиалга
       </MenuItem>
       <MenuItem link="/orders">захиалгууд</MenuItem>
+      <MenuItem link="/login">Нэвтрэх</MenuItem>
+      <MenuItem link="/signup">Бүртгүүлэх</MenuItem>
     </ul>
   </div>
 );

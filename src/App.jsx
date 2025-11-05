@@ -7,6 +7,8 @@ import BurgerPage from "./pages/BurgerPage";
 import OrderPage from "./pages/OrderPage";
 import Sidebar from "./components/Sidebar";
 import ShippingPage from "./pages/ShippingPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 class App extends React.Component {
   state = {
@@ -29,6 +31,8 @@ class App extends React.Component {
         />
         <div className={css.Content}>
           <Switch>
+            <Route path="/signup" component={SignupPage} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/orders" component={OrderPage} />
             <Route path="/ship" component={ShippingPage} />
             <Route path="/" component={BurgerPage} />
