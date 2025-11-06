@@ -17,8 +17,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         saving: false,
-        token: action.result.idToken,
-        userId: action.result.localId,
+        token: action.token,
+        userId: action.userId,
       };
     case "SIGNUP_USER_ERROR":
       return {
@@ -35,8 +35,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loggingIn: false,
-        token: action.result.idToken,
-        userId: action.result.localId,
+        token: action.token,
+        userId: action.userId,
       };
     case "LOGIN_USER_ERROR":
       return {

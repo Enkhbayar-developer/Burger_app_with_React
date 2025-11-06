@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadOrders: () => dispatch(actions.loadOrders()),
+    loadOrders: (userId) => dispatch(actions.loadOrders(userId)),
   };
 };
 
