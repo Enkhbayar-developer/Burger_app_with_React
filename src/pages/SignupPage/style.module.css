@@ -14,3 +14,38 @@
   margin: 10px auto;
   padding: 10px;
 }
+
+.PasswordCheckContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.PasswordCheckList {
+  border: 1px solid red;
+  padding: 10px;
+}
+
+.PasswordCheckListSuccess {
+  border: 1px solid green;
+  padding: 10px;
+}
+
+.PasswordCheckListSuccess p {
+  font-size: small;
+  margin: 0;
+  text-align: start;
+}
+
+.PasswordCheckList p {
+  font-size: small;
+  margin: 0;
+  text-align: start;
+}
+
+.Success {
+  color: green;
+}
+
+.Error {
+  color: red;
+}
