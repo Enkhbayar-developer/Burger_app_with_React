@@ -1,57 +1,39 @@
 import React from "react";
+import { useState } from "react";
 
 import Burger from "../../components/Burger";
-
 import BuildControls from "../../components/BuildControls";
-
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
-import Spinner from "../../components/General/Spinner";
 
-class BurgerPage extends React.Component {
-  state = {
-    confirmOrder: false,
+const BurgerPage = (props) => {
+  const [confirmOrder, setConfirmOrder] = useState(false);
+
+  const continueOrder = () => {
+    props.history.push("/ship");
+    hideOrderSummary();
   };
 
-  componentDidMount = () => {};
-
-  continueOrder = () => {
-    this.props.history.push("/ship");
-    this.hideOrderSummary();
+  const showOrderSummary = () => {
+    setConfirmOrder(true);
   };
 
-  showOrderSummary = () => {
-    this.setState({ confirmOrder: true });
+  const hideOrderSummary = () => {
+    setConfirmOrder(false);
   };
 
-  hideOrderSummary = () => {
-    this.setState({ confirmOrder: false });
-  };
-
-  render() {
-    return (
-      <div>
-        <Modal
-          hideOrderSummary={this.hideOrderSummary}
-          show={this.state.confirmOrder}
-        >
-          {this.state.loading ? (
-            <Spinner />
-          ) : (
-            <OrderSummary
-              onCancel={this.hideOrderSummary}
-              onContinue={this.continueOrder}
-            />
-          )}
-        </Modal>
-        <Burger />
-        <BuildControls
-          hideOrderSummary={this.hideOrderSummary}
-          showOrderSummary={this.showOrderSummary}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Modal hideOrderSummary={hideOrderSummary} show={confirmOrder}>
+        <OrderSummary onCancel={hideOrderSummary} onContinue={continueOrder} />
+      </Modal>
+      <Burger />
+      <BuildControls
+        hideOrderSummary={hideOrderSummary}
+        showOrderSummary={showOrderSummary}
+      />
+    </div>
+  );
+};
 
 export default BurgerPage;

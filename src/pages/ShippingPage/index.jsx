@@ -6,39 +6,33 @@ import Burger from "../../components/Burger";
 import Button from "../../components/General/Button";
 import ContactData from "../../components/ContactData";
 
-class ShippingPage extends React.Component {
-  CancelOrder = () => {
-    this.props.history.goBack();
+const ShippingPage = (props) => {
+  const CancelOrder = () => {
+    props.history.goBack();
   };
 
-  showContactdata = () => {
-    this.props.history.replace("/ship/contact");
+  const showContactdata = () => {
+    props.history.replace("/ship/contact");
   };
 
-  render() {
-    return (
-      <div className={css.ShippingPage}>
-        <p>Таны захиалга:</p>
-        <p>Нийт дүн: {this.props.price}</p>
-        <Burger />
-        <Button
-          clicked={this.CancelOrder}
-          btnType="Danger"
-          text="Захиалгыг цуцлах"
-        />
-        <Button
-          clicked={this.showContactdata}
-          btnType="Success"
-          text="Хүргэлтийн мэдээлэлээ оруулах"
-        />
+  return (
+    <div className={css.ShippingPage}>
+      <p>Таны захиалга:</p>
+      <p>Нийт дүн: {props.price}</p>
+      <Burger />
+      <Button clicked={CancelOrder} btnType="Danger" text="Захиалгыг цуцлах" />
+      <Button
+        clicked={showContactdata}
+        btnType="Success"
+        text="Хүргэлтийн мэдээлэлээ оруулах"
+      />
 
-        <Route path="/ship/contact">
-          <ContactData />
-        </Route>
-      </div>
-    );
-  }
-}
+      <Route path="/ship/contact">
+        <ContactData />
+      </Route>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {

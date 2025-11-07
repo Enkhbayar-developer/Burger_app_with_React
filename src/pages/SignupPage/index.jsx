@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/General/Button";
 import css from "./style.module.css";
@@ -6,209 +6,191 @@ import * as actions from "../../redux/actions/signupActions";
 import Spinner from "../../components/General/Spinner";
 import { Redirect } from "react-router-dom";
 
-class SignupPage extends Component {
-  state = {
-    email: "",
-    password: "",
-    confirmpassword: "",
-    error: "",
-    passchecklength: false,
-    passcheckuppercase: false,
-    passchecklowercase: false,
-    passcheckdigit: false,
-    passcheckspecial: false,
-    passcheckset: false,
+const SignupPage = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [passchecklength, setPassCheckLength] = useState(false);
+  const [passchecklowercase, setPasschecklowercase] = useState(false);
+  const [passcheckuppercase, setPasscheckuppercase] = useState(false);
+  const [passcheckdigit, setPasscheckdigit] = useState(false);
+  const [passcheckspecial, setPasscheckspecial] = useState(false);
+  const [passcheckset, setPasscheckset] = useState(false);
+
+  const changeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  changeEmail = (e) => {
-    this.setState({ email: e.target.value });
-  };
-
-  changePassword = (e) => {
-    this.setState({ password: e.target.value });
+  const changePassword = (e) => {
+    setPassword(e.target.value);
     //Check for minimum length (e.g., 8 characters)
     if (e.target.value.length > 7 || e.target.value.length == 8) {
-      this.setState({ passchecklength: true });
+      setPassCheckLength(true);
     } else {
-      this.setState({ passchecklength: false });
+      setPassCheckLength(false);
     }
 
     //Check for at least one uppercase letter
     if (/[A-Z]/.test(e.target.value)) {
-      this.setState({
-        passcheckuppercase: true,
-      });
+      setPasscheckuppercase(true);
     } else {
-      this.setState({
-        passcheckuppercase: false,
-      });
+      setPasscheckuppercase(false);
     }
 
     //Check for at least one lowercase letter
     if (/[a-z]/.test(e.target.value)) {
-      this.setState({
-        passchecklowercase: true,
-      });
+      setPasschecklowercase(true);
     } else {
-      this.setState({
-        passchecklowercase: false,
-      });
+      setPasschecklowercase(false);
     }
 
     //Check for at least one digit
     if (/[0-9]/.test(e.target.value)) {
-      this.setState({ passcheckdigit: true });
+      setPasscheckdigit(true);
     } else {
-      this.setState({ passcheckdigit: false });
+      setPasscheckdigit(false);
     }
 
     //Check for at least one special character (e.g., !@#$%^&*)
     if (/[!@#$%^&*()]/.test(e.target.value)) {
-      this.setState({
-        passcheckspecial: true,
-      });
+      setPasscheckspecial(true);
     } else {
-      this.setState({
-        passcheckspecial: false,
-      });
+      setPasscheckspecial(false);
     }
 
     if (
-      this.state.passchecklength &&
-      this.state.passchecklowercase &&
-      this.state.passcheckuppercase &&
-      this.state.passcheckdigit &&
-      this.state.passcheckspecial
+      passchecklength &&
+      passchecklowercase &&
+      passcheckuppercase &&
+      passcheckdigit &&
+      passcheckspecial
     ) {
-      this.setState({ passcheckset: true });
+      setPasscheckset(true);
     } else {
-      this.setState({ passcheckset: false });
+      setPasscheckset(false);
     }
   };
 
-  changeConfirmPassword = (e) => {
-    this.setState({ confirmpassword: e.target.value });
+  const changeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
-  signup = () => {
+  const signup = () => {
     if (
-      this.state.passchecklength &&
-      this.state.passchecklowercase &&
-      this.state.passcheckuppercase &&
-      this.state.passcheckdigit &&
-      this.state.passcheckspecial
+      passchecklength &&
+      passchecklowercase &&
+      passcheckuppercase &&
+      passcheckdigit &&
+      passcheckspecial
     ) {
-      if (this.state.password === this.state.confirmpassword) {
-        this.props.signupUser(this.state.email, this.state.email);
+      if (password === confirmpassword) {
+        props.signupUser(email, email);
       } else {
-        this.setState({ error: "Нууц үг таарахгүй байна" });
+        setError("Нууц үг таарахгүй байна");
       }
     }
   };
 
-  render() {
-    return (
-      <div className={css.Signup}>
-        {this.props.userId && <Redirect to="/" />}
-        <h1>Бүртгүүлэх форм</h1>
-        <p>Бүртгүүлээд захиалгын мэдээлэлээ хадгалаарай</p>
-        <input
-          onChange={this.changeEmail}
-          type="text"
-          name=""
-          placeholder="Эмайл хаяг"
-        />
-        <input
-          onChange={this.changePassword}
-          type="password"
-          name=""
-          placeholder="Нууц үг"
-        />
-        <div className={css.PasswordCheckContainer}>
-          <div
-            className={
-              this.state.passcheckset
-                ? css.PasswordCheckListSuccess
-                : css.PasswordCheckList
-            }
-          >
-            {this.state.passchecklength ? (
-              <p className={css.Success}>
-                Нууц үгийн урт<i className="fa-solid fa-check"></i>
-              </p>
-            ) : (
-              <p className={css.Error}>
-                Нууц үгийн урт багадаа 8 байна<i class="fa-solid fa-xmark"></i>
-              </p>
-            )}
-            {this.state.passchecklowercase ? (
-              <p className={css.Success}>
-                Нууц үг жижиг үсэг багтсан<i className="fa-solid fa-check"></i>
-              </p>
-            ) : (
-              <p className={css.Error}>
-                Нууц үг жижиг үсэг агуулах<i class="fa-solid fa-xmark"></i>
-              </p>
-            )}
-            {this.state.passcheckuppercase ? (
-              <p className={css.Success}>
-                Нууц үг том үсэг багтсан<i className="fa-solid fa-check"></i>
-              </p>
-            ) : (
-              <p className={css.Error}>
-                Нууц үг том үсэг агуулах<i class="fa-solid fa-xmark"></i>
-              </p>
-            )}
-            {this.state.passcheckdigit ? (
-              <p className={css.Success}>
-                Нууц үгэнд тоо багтсан<i className="fa-solid fa-check"></i>
-              </p>
-            ) : (
-              <p className={css.Error}>
-                Нууц үгэнд тоо агуулах<i class="fa-solid fa-xmark"></i>
-              </p>
-            )}
-            {this.state.passcheckspecial ? (
-              <p className={css.Success}>
-                Нууц үгэнд тусгай тэмдэгт багтсан
-                <i className="fa-solid fa-check"></i>
-              </p>
-            ) : (
-              <p className={css.Error}>
-                Нууц үгэнд тусгай тэмдэгт агуулах
-                <i class="fa-solid fa-xmark"></i>
-              </p>
-            )}
-          </div>
-        </div>
-        <input
-          onChange={this.changeConfirmPassword}
-          type="password"
-          name=""
-          placeholder="Нууц үг давтах"
-        />
-        <div className={css.PasswordCheckContainer}>
-          {this.state.error && (
-            <div
-              style={{ color: "red", border: "1px solid red", padding: "10px" }}
-            >
-              {this.state.error}
-            </div>
+  return (
+    <div className={css.Signup}>
+      {props.userId && <Redirect to="/" />}
+      <h1>Бүртгүүлэх форм</h1>
+      <p>Бүртгүүлээд захиалгын мэдээлэлээ хадгалаарай</p>
+      <input
+        onChange={changeEmail}
+        type="text"
+        name=""
+        placeholder="Эмайл хаяг"
+      />
+      <input
+        onChange={changePassword}
+        type="password"
+        name=""
+        placeholder="Нууц үг"
+      />
+      <div className={css.PasswordCheckContainer}>
+        <div
+          className={
+            passcheckset ? css.PasswordCheckListSuccess : css.PasswordCheckList
+          }
+        >
+          {passchecklength ? (
+            <p className={css.Success}>
+              Нууц үгийн урт<i className="fa-solid fa-check"></i>
+            </p>
+          ) : (
+            <p className={css.Error}>
+              Нууц үгийн урт багадаа 8 байна<i class="fa-solid fa-xmark"></i>
+            </p>
           )}
-          {this.props.error && (
-            <div
-              style={{ color: "red", border: "1px solid red", padding: "10px" }}
-            >
-              {this.props.error}
-            </div>
+          {passchecklowercase ? (
+            <p className={css.Success}>
+              Нууц үг жижиг үсэг багтсан<i className="fa-solid fa-check"></i>
+            </p>
+          ) : (
+            <p className={css.Error}>
+              Нууц үг жижиг үсэг агуулах<i class="fa-solid fa-xmark"></i>
+            </p>
+          )}
+          {passcheckuppercase ? (
+            <p className={css.Success}>
+              Нууц үг том үсэг багтсан<i className="fa-solid fa-check"></i>
+            </p>
+          ) : (
+            <p className={css.Error}>
+              Нууц үг том үсэг агуулах<i class="fa-solid fa-xmark"></i>
+            </p>
+          )}
+          {passcheckdigit ? (
+            <p className={css.Success}>
+              Нууц үгэнд тоо багтсан<i className="fa-solid fa-check"></i>
+            </p>
+          ) : (
+            <p className={css.Error}>
+              Нууц үгэнд тоо агуулах<i class="fa-solid fa-xmark"></i>
+            </p>
+          )}
+          {passcheckspecial ? (
+            <p className={css.Success}>
+              Нууц үгэнд тусгай тэмдэгт багтсан
+              <i className="fa-solid fa-check"></i>
+            </p>
+          ) : (
+            <p className={css.Error}>
+              Нууц үгэнд тусгай тэмдэгт агуулах
+              <i class="fa-solid fa-xmark"></i>
+            </p>
           )}
         </div>
-        {this.props.saving && <Spinner />}
-        <Button text="Sign up" btnType="Success" clicked={this.signup} />
       </div>
-    );
-  }
-}
+      <input
+        onChange={changeConfirmPassword}
+        type="password"
+        name=""
+        placeholder="Нууц үг давтах"
+      />
+      <div className={css.PasswordCheckContainer}>
+        {error && (
+          <div
+            style={{ color: "red", border: "1px solid red", padding: "10px" }}
+          >
+            {error}
+          </div>
+        )}
+        {props.error && (
+          <div
+            style={{ color: "red", border: "1px solid red", padding: "10px" }}
+          >
+            {props.error}
+          </div>
+        )}
+      </div>
+      {props.saving && <Spinner />}
+      <Button text="Sign up" btnType="Success" clicked={signup} />
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
