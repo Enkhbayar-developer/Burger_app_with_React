@@ -1,19 +1,31 @@
-import React, { useState, useEffect } from "react";
-import css from "./App.module.css";
-import { Switch, Route } from "react-router-dom";
+import React, { useState, useEffect, Suspense } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import css from "./App.module.css";
 
-import Toolbar from "./components/Toolbar";
-import BurgerPage from "./pages/BurgerPage";
-import OrderPage from "./pages/OrderPage";
-import Sidebar from "./components/Sidebar";
-import ShippingPage from "./pages/ShippingPage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import Logout from "./components/Logout";
 import * as actions from "./redux/actions/loginAcitons";
 import * as signupActions from "./redux/actions/signupActions";
+import LoginPage from "./pages/LoginPage";
+import Toolbar from "./components/Toolbar";
+import Sidebar from "./components/Sidebar";
+import Logout from "./components/Logout";
+import Spinner from "./components/General/Spinner";
+
+const BurgerPage = React.lazy(() => {
+  return import("./pages/BurgerPage");
+});
+
+const OrderPage = React.lazy(() => {
+  return import("./pages/OrderPage");
+});
+
+const SignupPage = React.lazy(() => {
+  return import("./pages/SignupPage");
+});
+
+const ShippingPage = React.lazy(() => {
+  return import("./pages/ShippingPage");
+});
 
 const App = (props) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -45,20 +57,22 @@ const App = (props) => {
       <Toolbar toggleSidebar={toggleSidebar} />
       <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
       <div className={css.Content}>
-        {props.userId ? (
-          <Switch>
-            <Route path="/logout" component={Logout} />
-            <Route path="/orders" component={OrderPage} />
-            <Route path="/ship" component={ShippingPage} />
-            <Route path="/" component={BurgerPage} />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/signup" component={SignupPage} />
-            <Route path="/login" component={LoginPage} />
-            <Redirect to="/login" />
-          </Switch>
-        )}
+        <Suspense fallback={<Spinner />}>
+          {props.userId ? (
+            <Switch>
+              <Route path="/logout" component={Logout} />
+              <Route path="/orders" component={OrderPage} />
+              <Route path="/ship" component={ShippingPage} />
+              <Route path="/" component={BurgerPage} />
+            </Switch>
+          ) : (
+            <Switch>
+              <Route path="/signup" component={SignupPage} />
+              <Route path="/login" component={LoginPage} />
+              <Redirect to="/login" />
+            </Switch>
+          )}
+        </Suspense>
       </div>
     </>
   );
