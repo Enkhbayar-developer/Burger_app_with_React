@@ -18,6 +18,12 @@ export const loadOrders = () => {
   };
 };
 
+export const clearOrder = () => {
+  return {
+    type: "CLEAR_ORDER",
+  };
+};
+
 export const loadOrdersStart = () => {
   return {
     type: "LOAD_ORDER_START",

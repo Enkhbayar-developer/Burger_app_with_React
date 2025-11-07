@@ -40,6 +40,8 @@ const reducer = (state = initialState, action) => {
       },
       totalPrice: state.totalPrice - ingredientsPrices[action.decIng],
     };
+  } else if (action.type === "CLEAR_ORDER") {
+    return initialState;
   }
   return state;
 };
