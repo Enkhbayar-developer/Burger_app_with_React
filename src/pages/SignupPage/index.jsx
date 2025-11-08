@@ -1,10 +1,10 @@
 import React, { Component, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "../../components/General/Button";
-import css from "./style.module.css";
-import * as actions from "../../redux/actions/signupActions";
 import Spinner from "../../components/General/Spinner";
-import { Redirect } from "react-router-dom";
+import * as actions from "../../redux/actions/signupActions";
+import css from "./style.module.css";
 
 const SignupPage = (props) => {
   const [email, setEmail] = useState("");
@@ -187,7 +187,7 @@ const SignupPage = (props) => {
         )}
       </div>
       {props.saving && <Spinner />}
-      <Button text="Sign up" btnType="Success" clicked={signup} />
+      <Button text="Бүртгүүлэх" btnType="Success" clicked={signup} />
     </div>
   );
 };

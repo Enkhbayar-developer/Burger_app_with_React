@@ -1,6 +1,6 @@
 import React from "react";
-import css from "./style.module.css";
 import Shadow from "../Shadow";
+import css from "./style.module.css";
 
 const Modal = (props) => (
   <>

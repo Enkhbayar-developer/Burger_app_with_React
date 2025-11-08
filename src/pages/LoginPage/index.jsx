@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import * as actions from "../../redux/actions/loginAcitons";
+import { connect } from "react-redux";
 import Button from "../../components/General/Button";
 import Spinner from "../../components/General/Spinner";
+import * as actions from "../../redux/actions/loginAcitons";
 import css from "./style.module.css";
 
 const LoginPage = (props) => {

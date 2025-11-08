@@ -1,14 +1,14 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import css from "./App.module.css";
-
-import * as actions from "./redux/actions/loginAcitons";
-import * as signupActions from "./redux/actions/signupActions";
 import LoginPage from "./pages/LoginPage";
 import Toolbar from "./components/Toolbar";
 import Sidebar from "./components/Sidebar";
 import Logout from "./components/Logout";
+import * as actions from "./redux/actions/loginAcitons";
+import * as signupActions from "./redux/actions/signupActions";
+import css from "./App.module.css";
+
 import Spinner from "./components/General/Spinner";
 
 const BurgerPage = React.lazy(() => {

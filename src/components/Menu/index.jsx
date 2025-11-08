@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import css from "./style.module.css";
 import MenuItem from "../MenuItem";
+import css from "./style.module.css";
 
 const Menu = (props) => (
   <div>

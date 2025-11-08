@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import BuildControl from "../BuildControl";
 import * as actions from "../../redux/actions/burgerActions";
 import css from "./style.module.css";
-import BuildControl from "../BuildControl";
 
 const BuildControls = (props) => {
   const disabledingredients = { ...props.burgeringredient };
@@ -46,6 +46,7 @@ const BuildControls = (props) => {
     </div>
   );
 };
+
 const mapStateToProps = (state) => {
   return {
     burgeringredient: state.burgerReducer.ingredients,

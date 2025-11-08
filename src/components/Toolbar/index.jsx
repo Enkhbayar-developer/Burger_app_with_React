@@ -1,8 +1,8 @@
 import React from "react";
 import Menu from "../Menu";
-import css from "./style.module.css";
-import Logo from "../Logo";
 import HamburgerMenu from "../HamburgerMenu";
+import Logo from "../Logo";
+import css from "./style.module.css";
 
 const Toolbar = (props) => (
   <header className={css.Toolbar}>

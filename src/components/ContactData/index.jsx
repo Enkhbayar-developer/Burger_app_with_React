@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import css from "./style.module.css";
 import Button from "../General/Button";
 import Spinner from "../General/Spinner";
-import { withRouter } from "react-router-dom";
 import * as actions from "../../redux/actions/orderActions";
+import css from "./style.module.css";
 
 const ContactData = (props) => {
   const [name, setName] = useState(null);

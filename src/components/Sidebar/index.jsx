@@ -1,8 +1,8 @@
 import React from "react";
 import Logo from "../Logo";
 import Menu from "../Menu";
-import css from "./style.module.css";
 import Shadow from "../../components/General/Shadow";
+import css from "./style.module.css";
 
 const Sidebar = (props) => {
   let classes = [css.Sidebar, css.Close];

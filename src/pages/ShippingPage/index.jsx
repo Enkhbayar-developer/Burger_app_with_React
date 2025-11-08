@@ -1,10 +1,10 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
-import css from "./style.module.css";
 import Burger from "../../components/Burger";
-import Button from "../../components/General/Button";
 import ContactData from "../../components/ContactData";
+import Button from "../../components/General/Button";
+import css from "./style.module.css";
 
 const ShippingPage = (props) => {
   const CancelOrder = () => {

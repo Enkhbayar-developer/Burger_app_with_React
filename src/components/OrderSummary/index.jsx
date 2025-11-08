@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import css from "./style.module.css";
 import Button from "../General/Button";
+import css from "./style.module.css";
 
 const OrderSummary = (props) => {
   return (

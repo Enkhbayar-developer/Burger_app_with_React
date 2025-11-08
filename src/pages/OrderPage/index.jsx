@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../redux/actions/orderActions";
-import Loading from "../../components/General/Spinner";
 import Order from "../../components/Order";
+import Loading from "../../components/General/Spinner";
+import * as actions from "../../redux/actions/orderActions";
 import css from "./style.module.css";
 
 const OrderPage = (props) => {

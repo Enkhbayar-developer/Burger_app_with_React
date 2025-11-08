@@ -1,6 +1,4 @@
-import React from "react";
-import { useState } from "react";
-
+import React, { useState } from "react";
 import Burger from "../../components/Burger";
 import BuildControls from "../../components/BuildControls";
 import Modal from "../../components/General/Modal";

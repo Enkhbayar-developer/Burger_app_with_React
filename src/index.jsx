@@ -4,21 +4,16 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { thunk } from "redux-thunk";
-
-import "./index.css";
 import App from "./App";
-
 import burgerReducer from "./redux/reducer/burgerreducer";
 import orderReducer from "./redux/reducer/orderReducer";
 import signupReducer from "./redux/reducer/signupReducer";
+import "./index.css";
 
 const logger = (store) => {
   return (next) => {
     return (action) => {
-      console.log("middleware: dispatching ==> ", action);
-      console.log("middleware: state before ==> ", store.getState());
       const result = next(action);
-      console.log("middleware: state after ==> ", store.getState());
       return result;
     };
   };
